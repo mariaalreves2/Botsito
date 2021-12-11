@@ -25,7 +25,7 @@ function gotMessage(message){
   /*if (message.content.match(/([])/)){//expresiones regulares
     message.reply("mundo ");
   }*/
-  /*if (message.channel.id === "895788746891481152" &&
+  /*if (message.channel.id === "912661835705106486'" &&
       message.content === "hola"){
         message.channel.send("mundo :earth_americas: ")
     }*/
