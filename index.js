@@ -1,5 +1,54 @@
 "use strict";
+class Pila{
+  constructor(){
+      this.items = {};
+      this.top = 0;
+  };
+  
+  push(data){
+      this.top++;
+      this.items[this.top] = data;
+  };
 
+  pop(){
+      let deletedData;
+
+      if(this.top !== 0){
+          deletedData = this.items[this.top];
+          delete this.items[this.top];
+          this.top--;
+          return deletedData;
+      };
+  };
+
+  getSize(){
+      return this.top;
+  };
+
+  isEmpty(){
+      if(!this.getSize()){
+          return true;
+      }else{
+          return false;
+      }
+  };
+
+  peek(){
+      if(this.isEmpty()){
+          return null;
+      };
+
+      return this.items[this.top];
+  };
+
+  print(){
+      let result = '';
+      for(let i = this.top; i > 0; i--){
+          result += this.items[i] + ' ';
+      };
+      return result;
+  };
+};
 require("dotenv").config();
 const { Client, Intents } = require("discord.js");
 
@@ -36,50 +85,17 @@ function gotMessage(message){
   if(message.channel.id===BOT_CHANNEL && !message.author.bot){
     let cadena=message.content;
     let band=false;
-    let i=0;
-    //message.channel.send("q0");
-    /*if(cadena[0]=='b'){
-      do{
-        //message.channel.send("q1");
-        i++;
-      }while(cadena[i]=='b');
-      if(cadena[i]=='a'){
-        band=true;
-        i++;
-        while(cadena[i]=='a'){
-          i++;
-        }
-        if(cadena.length!=i){
-          band=false;
-        }
-      }
-      else{
-        band=false;
-      }
-    }
-    if(cadena[0]=='a'){
-      band=true;
-      i++;
-      while(cadena[i]=='a'){
-        i++;
-      }
-      if(cadena.length!=i){
-        band=false;
-      }
-    }
-    if(band==true){
-      message.channel.send("Desbloqueo completado con el lenguaje {b^ma^n:m>=0,n>0}");
-    }
-    else{
-      message.channel.send("Desbloqueo sin éxito");
-    }
-    band=false;
-    if(cadena[0]=='a'){
-
-    }*///código de los lenguajes 
+    
     /*cadena[]=='A'||cadena[]=='B'||cadena[]=='C'||cadena[]=='D'||cadena[]=='E'||cadena[]=='F'
     ||cadena[]=='0'||cadena[]=='1'||cadena[]=='2'||cadena[]=='3'||cadena[]=='4'||cadena[]=='5'
     ||cadena[]=='6'||cadena[]=='7'||cadena[]=='8'||cadena[]=='9'*/
+    //let =['A','B','C','D','E','F','0','1','2','3','4','5','6','7','8','9']
+    //let Σ = [['0','1', '2', '3', '4', '5', '6', '7', '8', '9'], ['A', 'B', 'C', 'D', 'E', 'F']];
+    /*for(inti=0;i<Σ[1].length;i++ ){
+      if(cadena)
+    }*/
+    message.channel.send("Revisando que sea un color cálido...");
+    message.channel.send("q0");
     if(cadena[0]=='A'||cadena[0]=='B'||cadena[0]=='C'||cadena[0]=='D'||cadena[0]=='E'||cadena[0]=='F'){
       message.channel.send("q1");
       if(cadena[1]=='A'||cadena[1]=='B'||cadena[1]=='C'||cadena[1]=='D'||cadena[1]=='E'||cadena[1]=='F'
@@ -103,10 +119,10 @@ function gotMessage(message){
                       message.channel.send("q6");
                     }
                     if(cadena[6]==null){
-                      message.channel.send("El valor de "+cadena+" es un color cálido");
+                      band=true;
                     }
                     else{
-                      message.channel.send("El color ingresado no es válido");
+                      band=false;
                     }
                 }
                 
@@ -114,6 +130,136 @@ function gotMessage(message){
       }
     }
   }
+  if(band){
+    message.channel.send("El valor de "+cadena+" es un color cálido");
+  }
+  else{
+    message.channel.send("El valor de "+cadena+" no es un color cálido");
+    message.channel.send("Revisando que sea un color frío...");
+    let Q = ["q0", "q1", "q2", "q3"];
+    let Σ = [['0','1', '2', '3', '4', '5', '6', '7', '8', '9'], ['A', 'B', 'C', 'D', 'E', 'F']];
+    let Γ = ["Z", "0", "1"];
+    //let δ = [ [Q[0], Σ[0], Γ[0]], [Q[1], Σ, Γ[2]], [Q[1], Σ[1], Γ[1]], [Q[2], Σ, Γ[2]] ];
+    //let δ = [ ["q0", Σ[0], "Z"], ["q1", Σ, "1"], ["q1", Σ[1], "0"], ["q2", Σ, "1"]];
+    var qi = Q[0];
+    var qf = Q[3];
+    var S = Γ[0];
+  
+    //Definir el estado y transición actual
+    var q = qi;
+    //let δ_actual = δ[0];
+  
+    //Crear e inicializar la pila con el símbolo inicial
+    const pila = new Pila();
+    pila.push(S);
+  
+    var no_aceptada = false;
+    var siguiente_estado = false;
+  
+    //var cadena = "1111FF";
+  
+    //while(no_aceptada != true){
+  
+        if(q == Q[0] && pila.peek() == 'Z'){
+          message.channel.send("q0");
+            for(var i = 0; i < Σ[0].length; i++){
+                if(cadena[0] == Σ[0][i]){
+                    pila.pop();
+                    pila.push("1"); 
+                    pila.push("0");
+                    pila.push("1");
+                    pila.push("1");
+                    pila.push("1");
+                    q = Q[1];
+                    siguiente_estado = true;
+                    break;
+                };
+            };
+  
+            if(siguiente_estado == false){
+                no_aceptada = true;
+            };
+            siguiente_estado = false;
+        };
+  
+        if(q == Q[1] && pila.peek() == '1'){
+          message.channel.send("q1");
+            for(var j = 0; j < 3; j++){
+                for(var k = 0; k < Σ[0].length; k++){
+                    if(cadena[j] == Σ[0][k]){
+                        pila.pop(); 
+                        q = Q[1];
+                        siguiente_estado = true;
+                        break;
+                    };
+                };
+        
+                for(var k = 0; k < Σ[1].length; k++){
+                    if(cadena[j] == Σ[1][k]){
+                        pila.pop();
+                        q = Q[1];
+                        siguiente_estado = true;
+                        break;
+                    }
+                };
+            };
+  
+            if(siguiente_estado == false){
+                no_aceptada = true;
+            };
+            siguiente_estado = false;
+        };
+  
+        if(q == Q[1] && pila.peek() == '0'){
+            for(var i = 0; i < Σ[1].length; i++){
+                if(cadena[4] == Σ[1][i]){
+                    pila.pop();
+                    q = Q[2];
+                    siguiente_estado = true;
+                    break;
+                };
+            };  
+            if(siguiente_estado == false){
+                no_aceptada = true;
+            };
+            siguiente_estado = false;
+        };
+  
+        if(q == Q[2] && pila.peek() == '1'){
+          message.channel.send("q2");
+            for(var k = 0; k < Σ[0].length; k++){
+                if(cadena[5] == Σ[0][k]){
+                    pila.pop(); 
+                    q = Q[3];
+                    break;
+                };
+            };
+  
+            for(var i = 0; i < Σ[1].length; i++){
+                if(cadena[5] == Σ[1][i]){
+                    pila.pop(); 
+                    q = Q[3];
+                    break;
+                };
+            };
+        };
+        
+        
+    //};
+    /*console.log(q);
+    console.log(pila);
+    console.log(pila.isEmpty);
+    console.log(no_aceptada);*/
+    if(q == qf && pila.isEmpty && no_aceptada == false){
+        message.channel.send("q3");
+        message.channel.send("El valor de "+cadena+" es un color frío");
+        //message.channel.send("El color ingresado es cálido");
+    }else{  
+        message.channel.send("No se conoce su clasicación");
+    }
+  }
+  //if(cadena[0])
+  
 }
 
 }
