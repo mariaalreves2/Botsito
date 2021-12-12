@@ -1,16 +1,16 @@
 "use strict";
-class Pila{
-  constructor(){
+class Pila{//clase con la que se manejará la pila
+  constructor(){//se inicia una lista
       this.items = {};
       this.top = 0;
   };
   
-  push(data){
+  push(data){//para insertar elementos los guarda al principio de la lista para que funcione como una pila
       this.top++;
       this.items[this.top] = data;
   };
 
-  pop(){
+  pop(){//quita el primer elemento de la lista para que funcione como una pila
       let deletedData;
 
       if(this.top !== 0){
@@ -21,11 +21,11 @@ class Pila{
       };
   };
 
-  getSize(){
+  getSize(){//regresa el tamaño de la pila
       return this.top;
   };
 
-  isEmpty(){
+  isEmpty(){//revisa que la pila esté vacía
       if(!this.getSize()){
           return true;
       }else{
@@ -33,7 +33,7 @@ class Pila{
       }
   };
 
-  peek(){
+  peek(){//regresa el elemento que esté al principio de la pila
       if(this.isEmpty()){
           return null;
       };
@@ -41,7 +41,7 @@ class Pila{
       return this.items[this.top];
   };
 
-  print(){
+  print(){//imprime la pila
       let result = '';
       for(let i = this.top; i > 0; i--){
           result += this.items[i] + ' ';
@@ -49,6 +49,7 @@ class Pila{
       return result;
   };
 };
+//código necesario para poder hacer que funcione el bot
 require("dotenv").config();
 const { Client, Intents } = require("discord.js");
 
@@ -60,89 +61,113 @@ const client = new Client({
 const TOKEN = process.env.TOKEN;
 const BOT_CHANNEL = process.env.BOTCHANNEL;
 
-// When the client is ready, run this code (only once)
+
 client.once("ready", () => {
   console.log("Ready! 🤖");
 });
-const MESSAGE_RESPONSE = ["Mundo 🌍", "Cómo estás?", "Qué tal?"];
-//
-function gotMessage(message){
-  //console.log("New Message!");
-  /*if (message.content === "hola"){
-      message.reply("mundo ");
-  }*/
-  /*if (message.content.match(/([])/)){//expresiones regulares
-    message.reply("mundo ");
-  }*/
-  /*if (message.channel.id === "912661835705106486'" &&
-      message.content === "hola"){
-        message.channel.send("mundo :earth_americas: ")
-    }*/
-  if (message.channel.id === BOT_CHANNEL && message.content === "hola" && !message.author.bot){
-      let randomIndex = Math.floor(Math.random() * MESSAGE_RESPONSE.length);
-      message.channel.send(MESSAGE_RESPONSE[randomIndex]);
-  }
-  if(message.channel.id===BOT_CHANNEL && !message.author.bot){
-    let cadena=message.content;
-    let band=false;
-    
-    /*cadena[]=='A'||cadena[]=='B'||cadena[]=='C'||cadena[]=='D'||cadena[]=='E'||cadena[]=='F'
-    ||cadena[]=='0'||cadena[]=='1'||cadena[]=='2'||cadena[]=='3'||cadena[]=='4'||cadena[]=='5'
-    ||cadena[]=='6'||cadena[]=='7'||cadena[]=='8'||cadena[]=='9'*/
-    //let =['A','B','C','D','E','F','0','1','2','3','4','5','6','7','8','9']
-    //let Σ = [['0','1', '2', '3', '4', '5', '6', '7', '8', '9'], ['A', 'B', 'C', 'D', 'E', 'F']];
-    /*for(inti=0;i<Σ[1].length;i++ ){
-      if(cadena)
-    }*/
+
+function gotMessage(message){//tiene como parámetro lo que ingrese el usuario en el chat del bot
+ 
+  if(message.channel.id===BOT_CHANNEL && !message.author.bot){//si se encuentra en el canal del bot y el mensaje no lo dio el bot
+    let cadena=message.content;//guarda como cadena el contenido de lo que ingreso el usuario
+    let Σ = [['0','1', '2', '3', '4', '5', '6', '7', '8', '9'], ['A', 'B', 'C', 'D', 'E', 'F']];//alfabeto que tendrán los aceptadores
+    var estado=0;
     message.channel.send("Revisando que sea un color cálido...");
     message.channel.send("q0");
-    if(cadena[0]=='A'||cadena[0]=='B'||cadena[0]=='C'||cadena[0]=='D'||cadena[0]=='E'||cadena[0]=='F'){
-      message.channel.send("q1");
-      if(cadena[1]=='A'||cadena[1]=='B'||cadena[1]=='C'||cadena[1]=='D'||cadena[1]=='E'||cadena[1]=='F'
-      ||cadena[1]=='0'||cadena[1]=='1'||cadena[1]=='2'||cadena[1]=='3'||cadena[1]=='4'||cadena[1]=='5'
-      ||cadena[1]=='6'||cadena[1]=='7'||cadena[1]=='8'||cadena[1]=='9'){
-        message.channel.send("q2");
-          if(cadena[2]=='A'||cadena[2]=='B'||cadena[2]=='C'||cadena[2]=='D'||cadena[2]=='E'||cadena[2]=='F'
-          ||cadena[2]=='0'||cadena[2]=='1'||cadena[2]=='2'||cadena[2]=='3'||cadena[2]=='4'||cadena[2]=='5'
-          ||cadena[2]=='6'||cadena[2]=='7'||cadena[2]=='8'||cadena[2]=='9'){
-            message.channel.send("q3");
-            if(cadena[3]=='A'||cadena[3]=='B'||cadena[3]=='C'||cadena[3]=='D'||cadena[3]=='E'||cadena[3]=='F'
-            ||cadena[3]=='0'||cadena[3]=='1'||cadena[3]=='2'||cadena[3]=='3'||cadena[3]=='4'||cadena[3]=='5'
-            ||cadena[3]=='6'||cadena[3]=='7'||cadena[3]=='8'||cadena[3]=='9'){
-              message.channel.send("q4");
-                if(cadena[4]=='0'||cadena[4]=='1'||cadena[4]=='2'||cadena[4]=='3'||cadena[4]=='4'||cadena[4]=='5'
-                ||cadena[4]=='6'||cadena[4]=='7'||cadena[4]=='8'||cadena[4]=='9'){
-                  message.channel.send("q5");
-                    if(cadena[5]=='A'||cadena[5]=='B'||cadena[5]=='C'||cadena[5]=='D'||cadena[5]=='E'||cadena[5]=='F'
-                    ||cadena[5]=='0'||cadena[5]=='1'||cadena[5]=='2'||cadena[5]=='3'||cadena[5]=='4'||cadena[5]=='5'
-                    ||cadena[5]=='6'||cadena[5]=='7'||cadena[5]=='8'||cadena[5]=='9'){
-                      message.channel.send("q6");
-                    }
-                    if(cadena[6]==null){
-                      band=true;
-                    }
-                    else{
-                      band=false;
-                    }
-                }
-                
-            }
+    //parte con NFA
+    for(var i=0; i<Σ[1].length;i++){//Revisa si se pasa al estado q1 
+      if(cadena[0]==Σ[1][i]){//Revisa si la posición de la cadena cuenta con los valores A,B,C,D,E o F
+        message.channel.send("q1");
+        estado=1;
+        break;
       }
     }
-  }
-  if(band){
-    message.channel.send("El valor de "+cadena+" es un color cálido");
-  }
-  else{
+    if(estado==1){//Revisa si pasa al estado q2
+      for(var i=0; i<Σ[0].length;i++){
+        if(cadena[1]==Σ[0][i]){//Revisa si la posición de la cadena cuenta con los valores 0,1,2,3,4,5,6,7,8,9
+          message.channel.send("q2");
+          estado=2;
+          break;
+        }
+      }
+      for(var i=0; i<Σ[1].length;i++){
+        if(cadena[1]==Σ[1][i]){//Revisa si la posición de la cadena cuenta con los valores A,B,C,D,E o F
+          message.channel.send("q2");
+          estado=2;
+          break;
+        }
+      }
+    }
+    if(estado==2){//Revisa si pasa al estado q3
+      for(var i=0; i<Σ[0].length;i++){
+        if(cadena[2]==Σ[0][i]){//Revisa si la posición de la cadena cuenta con los valores 0,1,2,3,4,5,6,7,8,9
+          message.channel.send("q3");
+          estado=3;
+          break;
+        }
+      }
+      for(var i=0; i<Σ[1].length;i++){
+        if(cadena[2]==Σ[1][i]){//Revisa si la posición de la cadena cuenta con los valores A,B,C,D,E o F
+          message.channel.send("q3");
+          estado=3;
+          break;
+        }
+      }
+    }
+    if(estado==3){//Revisa si pasa al estado q4
+      for(var i=0; i<Σ[0].length;i++){
+        if(cadena[3]==Σ[0][i]){//Revisa si la posición de la cadena cuenta con los valores 0,1,2,3,4,5,6,7,8,9
+          message.channel.send("q4");
+          estado=4;
+          break;
+        }
+      }
+      for(var i=0; i<Σ[1].length;i++){
+        if(cadena[3]==Σ[1][i]){//Revisa si la posición de la cadena cuenta con los valores A,B,C,D,E o F
+          message.channel.send("q4");
+          estado=4;
+          break;
+        }
+      }
+    }
+    if(estado==4){//Revisa si pasa al estado q5
+      for(var i=0; i<Σ[1].length;i++){
+        if(cadena[4]==Σ[0][i]){//Revisa si la posición de la cadena cuenta con los valores 0,1,2,3,4,5,6,7,8,9
+          message.channel.send("q5");
+          estado=5;
+          break;
+        }
+      }
+    }
+    if(estado==5){//Revisa si pasa al estado q6
+      for(var i=0; i<Σ[0].length;i++){
+        if(cadena[5]==Σ[0][i]){//Revisa si la posición de la cadena cuenta con los valores 0,1,2,3,4,5,6,7,8,9
+          message.channel.send("q6");
+          estado=6;
+          break;
+        }
+      }
+      for(var i=0; i<Σ[1].length;i++){
+        if(cadena[5]==Σ[1][i]){//Revisa si la posición de la cadena cuenta con los valores A,B,C,D,E o F
+          message.channel.send("q6");
+          estado=6;
+          break;
+        }
+      }
+    }
+    if(estado==6&&cadena[6]==null){//si llega al estado q6 y ya no hay más elementos en la cadena es un color cálido
+      message.channel.send("El valor de "+cadena+" es un color cálido");
+    }
+   
+  else{//si no llega al estado q6 se revisa si es un color frío
     message.channel.send("El valor de "+cadena+" no es un color cálido");
     message.channel.send("Revisando que sea un color frío...");
-    let Q = ["q0", "q1", "q2", "q3"];
-    let Σ = [['0','1', '2', '3', '4', '5', '6', '7', '8', '9'], ['A', 'B', 'C', 'D', 'E', 'F']];
-    let Γ = ["Z", "0", "1"];
+    let Q = ["q0", "q1", "q2", "q3"];//lista con los estados
+    let Γ = ["Z", "0", "1"];//lista con los valores posibles de la pila
     //let δ = [ [Q[0], Σ[0], Γ[0]], [Q[1], Σ, Γ[2]], [Q[1], Σ[1], Γ[1]], [Q[2], Σ, Γ[2]] ];
     //let δ = [ ["q0", Σ[0], "Z"], ["q1", Σ, "1"], ["q1", Σ[1], "0"], ["q2", Σ, "1"]];
-    var qi = Q[0];
-    var qf = Q[3];
+    var qi = Q[0];//se guarda como es estado actual a q0
+    var qf = Q[3];//se guarda como estado final a q3
     var S = Γ[0];
   
     //Definir el estado y transición actual
@@ -160,85 +185,89 @@ function gotMessage(message){
   
     //while(no_aceptada != true){
   
-        if(q == Q[0] && pila.peek() == 'Z'){
-          message.channel.send("q0");
+        if(q == Q[0] && pila.peek() == 'Z'){//revisa si el estado está en q0 y el inicio de la pila tenga una Z
+          message.channel.send("q0");//manda el estado q0
             for(var i = 0; i < Σ[0].length; i++){
-                if(cadena[0] == Σ[0][i]){
-                    pila.pop();
+                if(cadena[0] == Σ[0][i]){//si la cadena en la posición tiene algún valor de 0,1,2,3,4,5,6,7,8,9
+                  //no saca nada de la pila y queda la pila 11101Z
+                    pila.pop();//saca un elemento de la pila
                     pila.push("1"); 
                     pila.push("0");
                     pila.push("1");
                     pila.push("1");
                     pila.push("1");
                     q = Q[1];
-                    siguiente_estado = true;
+                    siguiente_estado = true;//indica que hace la transición de estado
                     break;
                 };
             };
   
-            if(siguiente_estado == false){
+            if(siguiente_estado == false){//si no hace la transición de estado, la cadena no es aceptada
                 no_aceptada = true;
             };
-            siguiente_estado = false;
+            siguiente_estado = false;//se marca que todavia 
         };
   
-        if(q == Q[1] && pila.peek() == '1'){
+        if(q == Q[1] && pila.peek() == '1'){//si se está en el estado q1 y la pila tiene un 1
           message.channel.send("q1");
+          /*va a pasar al estado q2 si tiene alguno de los elementos del alfabeto 0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F 
+          en las tres posiciones siguientes*/
             for(var j = 0; j < 3; j++){
                 for(var k = 0; k < Σ[0].length; k++){
                     if(cadena[j] == Σ[0][k]){
-                        pila.pop(); 
-                        q = Q[1];
-                        siguiente_estado = true;
+                        pila.pop(); //saca un elemento de la pila
+                        q = Q[1];//se pasa al estado q1
+                        siguiente_estado = true;//indica que hace la transición 
                         break;
                     };
                 };
         
                 for(var k = 0; k < Σ[1].length; k++){
                     if(cadena[j] == Σ[1][k]){
-                        pila.pop();
-                        q = Q[1];
-                        siguiente_estado = true;
+                        pila.pop();//saca un elemento de la pila
+                        q = Q[1];//se pasa al estado q1
+                        siguiente_estado = true;//indica que hace la transición 
                         break;
                     }
                 };
             };
   
-            if(siguiente_estado == false){
+            if(siguiente_estado == false){//si no hace la transición de estado, la cadena no es aceptada
                 no_aceptada = true;
             };
-            siguiente_estado = false;
+            siguiente_estado = false;//reinicia la bandera de la transición 
         };
   
-        if(q == Q[1] && pila.peek() == '0'){
-            for(var i = 0; i < Σ[1].length; i++){
+        if(q == Q[1] && pila.peek() == '0'){//si esta en el estado q1 y la pila tiene un cero
+            for(var i = 0; i < Σ[1].length; i++){//va a revisar que el elemento de la cadena sea A,B,C,D,E o F
                 if(cadena[4] == Σ[1][i]){
                     pila.pop();
-                    q = Q[2];
+                    q = Q[2];//se pasa al estado q2
                     siguiente_estado = true;
                     break;
                 };
             };  
-            if(siguiente_estado == false){
+            if(siguiente_estado == false){//si no hace la transición de estado, la cadena no es aceptada
                 no_aceptada = true;
             };
-            siguiente_estado = false;
+            siguiente_estado = false;//reinicia la bandera de la transición 
         };
   
-        if(q == Q[2] && pila.peek() == '1'){
-          message.channel.send("q2");
+        if(q == Q[2] && pila.peek() == '1'){//si llega al estado q2 y tiene un 1 en la pila
+          message.channel.send("q2");//manda que llegó al estado q2
             for(var k = 0; k < Σ[0].length; k++){
+              //revisa si en esa posición tiene algún elemento del alfabeto
                 if(cadena[5] == Σ[0][k]){
-                    pila.pop(); 
-                    q = Q[3];
+                    pila.pop(); //saca un elemento de la pila
+                    q = Q[3];//se pasa al estado q3
                     break;
                 };
             };
   
             for(var i = 0; i < Σ[1].length; i++){
                 if(cadena[5] == Σ[1][i]){
-                    pila.pop(); 
-                    q = Q[3];
+                    pila.pop(); //saca un elemento de la pila
+                    q = Q[3];//se pasa al estado q3
                     break;
                 };
             };
@@ -250,15 +279,18 @@ function gotMessage(message){
     console.log(pila);
     console.log(pila.isEmpty);
     console.log(no_aceptada);*/
-    if(q == qf && pila.isEmpty && no_aceptada == false){
-        message.channel.send("q3");
-        message.channel.send("El valor de "+cadena+" es un color frío");
-        //message.channel.send("El color ingresado es cálido");
-    }else{  
-        message.channel.send("No se conoce su clasicación");
+    if(q == qf && pila.isEmpty && no_aceptada == false){//si la pila está vacía, se llega al estado final y la cadena ha sido aceptada
+        message.channel.send("q3");//se manda que llegó al estado q3
+        if(cadena[6]==null){//si ya no hay más elementos en la cadena, es uncolor frío
+          message.channel.send("El valor de "+cadena+" es un color frío");
+        }
+        else{//si hay más elementos de la cadena no es un color válido
+          message.channel.send("La cadena tiene más elementos de los esperados");
+        }
+    }else{  //en caso de que no esté dentro de la clasificación de frío o cálido, no se puede determinar por este método
+        message.channel.send("No se conoce su clasificación");
     }
   }
-  //if(cadena[0])
   
 }
 
@@ -266,5 +298,4 @@ function gotMessage(message){
 
 client.on("messageCreate",gotMessage);
 
-// Login to Discord with your client's token
 client.login(TOKEN);
